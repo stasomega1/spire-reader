@@ -1,0 +1,79 @@
+package server
+
+import (
+	"context"
+	"errors"
+	"github.com/dgrijalva/jwt-go"
+	"github.com/google/uuid"
+	"net/http"
+	"spire-reader/app/model"
+	"time"
+)
+
+const (
+	CtxClaimsKey ctxKey = iota
+	CtxRequestIdKey
+)
+
+type ctxKey int8
+
+func (server *Server) authenticateUser(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if !server.Auth {
+			next.ServeHTTP(w, r)
+			return
+		}
+		tokenString := r.Header.Get("Authorization")
+		if tokenString == "" {
+			server.Error(w, http.StatusUnauthorized, errors.New("not authenticated"))
+			return
+		}
+		claims := model.Claims{}
+		token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (i interface{}, e error) {
+			return server.JwtKey, nil
+		})
+		if (token != nil && !token.Valid) || (err != nil && err == jwt.ErrSignatureInvalid) {
+			server.Error(w, http.StatusUnauthorized, errors.New("not authenticated"))
+			return
+		}
+		if err != nil {
+			server.Logger.Errorf("cant parse token with claim, err %v", err)
+			server.Error(w, http.StatusInternalServerError, err)
+			return
+		}
+		expTime := time.Now().Add(time.Duration(server.JwtTokenLiveMinutes) * time.Minute)
+		claims.ExpiresAt = expTime.Unix()
+		token = jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+		tokenString, err = token.SignedString(server.JwtKey)
+		if err != nil {
+			server.Logger.Errorf("cant get jwtString for user %s, err: %v", claims.User.Username, err)
+			server.Error(w, http.StatusInternalServerError, err)
+			return
+		}
+		w.Header().Set("Authorization", tokenString)
+		next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), CtxClaimsKey, claims)))
+	})
+}
+
+func (server *Server) loggingRequests(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		server.Logger.Infof("started %s %s remote_address=%s request_id=%s", r.Method, r.RequestURI, r.RemoteAddr, r.Context().Value(CtxRequestIdKey))
+		now := time.Now()
+		rw := &responseWriter{w, http.StatusOK}
+		next.ServeHTTP(rw, r)
+		server.Logger.Infof("completed with %d %s in %v remote_address=%s request_id=%s",
+			rw.statusCode,
+			http.StatusText(rw.statusCode),
+			time.Now().Sub(now),
+			r.RemoteAddr,
+			r.Context().Value(CtxRequestIdKey))
+	})
+}
+
+func (server *Server) setRequestId(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		id := uuid.New().String()
+		w.Header().Set("X-Request-Id", id)
+		next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), CtxRequestIdKey, id)))
+	})
+}

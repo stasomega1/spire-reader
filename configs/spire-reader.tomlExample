@@ -1,0 +1,20 @@
+#main app
+bind_addr = 1111
+liveness_addr = 2222
+log_level = "debug"
+max_goroutines_count = 3333
+jwt_key = "4444"
+jwt_token_live = 5555
+
+#pg
+[postgresdbconfig]
+need_connect = false
+host = "6666"
+port = 7777
+db_name = "8888"
+db_ssl_mode = "9999"
+db_username = "0000"
+db_password = "1111"
+max_idle_conns = 2222
+max_open_conns = 3333
+conn_max_life_time = 4444 #nanosec
