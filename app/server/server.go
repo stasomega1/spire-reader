@@ -48,8 +48,10 @@ func (server *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	server.Router.ServeHTTP(w, r)
 }
 
+//Endpoints
 func (server *Server) configureRouter() {
 	server.Router.HandleFunc("/version", server.Version()).Methods(http.MethodGet, http.MethodOptions)
+	server.Router.HandleFunc("/test", server.TestFunc()).Methods(http.MethodGet, http.MethodOptions)
 }
 
 func (server *Server) logRestHandler(level model.LogLevel, handlerName, info string) {

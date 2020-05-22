@@ -1,0 +1,95 @@
+{
+  "gold_per_floor": [
+    99
+  ],
+  "floor_reached": 1,
+  "playtime": 122,
+  "items_purged": [],
+  "score": 7,
+  "play_id": "03083bfe-d391-4709-92de-49f83b1f6916",
+  "local_time": "20200519225355",
+  "is_ascension_mode": true,
+  "campfire_choices": [],
+  "neow_cost": "NONE",
+  "seed_source_timestamp": 67604346320800,
+  "circlet_count": 0,
+  "master_deck": [
+    "Strike_R",
+    "Strike_R",
+    "Strike_R",
+    "Strike_R",
+    "Strike_R",
+    "Defend_R",
+    "Defend_R",
+    "Defend_R",
+    "Defend_R",
+    "Bash"
+  ],
+  "special_seed": 0,
+  "relics": [
+    "Burning Blood"
+  ],
+  "potions_floor_usage": [],
+  "damage_taken": [
+    {
+      "damage": 0,
+      "enemies": "Cultist",
+      "floor": 1,
+      "turns": 1
+    }
+  ],
+  "seed_played": "-7613576832376527467",
+  "potions_obtained": [
+    {
+      "floor": 0.0,
+      "key": "LiquidBronze"
+    },
+    {
+      "floor": 0.0,
+      "key": "Dexterity Potion"
+    },
+    {
+      "floor": 0.0,
+      "key": "DistilledChaos"
+    }
+  ],
+  "is_trial": false,
+  "path_per_floor": [
+    "M"
+  ],
+  "character_chosen": "IRONCLAD",
+  "items_purchased": [],
+  "campfire_rested": 0,
+  "item_purchase_floors": [],
+  "current_hp_per_floor": [
+    72
+  ],
+  "gold": 99,
+  "neow_bonus": "THREE_SMALL_POTIONS",
+  "is_prod": false,
+  "is_daily": false,
+  "chose_seed": false,
+  "campfire_upgraded": 0,
+  "win_rate": 0,
+  "timestamp": 1589907235,
+  "path_taken": [
+    "M"
+  ],
+  "build_version": "2020-01-27",
+  "purchased_purges": 0,
+  "victory": false,
+  "max_hp_per_floor": [
+    80
+  ],
+  "card_choices": [],
+  "player_experience": 499211,
+  "relics_obtained": [],
+  "event_choices": [],
+  "is_beta": false,
+  "boss_relics": [],
+  "items_purged_floors": [],
+  "is_endless": false,
+  "potions_floor_spawned": [],
+  "killed_by": "Cultist",
+  "ascension_level": 7
+}

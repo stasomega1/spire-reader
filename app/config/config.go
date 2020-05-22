@@ -135,7 +135,6 @@ func ParseConfig(configPath, profile string, cnf *Config) error {
 }
 
 func ConfigureDB(cnf *PostgresDbConfig) (*sqlx.DB, error) {
-
 	databaseUrl := cnf.GetConnectionString()
 	db, err := sqlx.Open("pgx", databaseUrl)
 	if err != nil {

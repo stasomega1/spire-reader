@@ -18,6 +18,14 @@ func NewJsonNullString(str string) *JsonNullString {
 	}}
 }
 
+func NewJsonNullStringSlice(strSlice []string) []*JsonNullString {
+	slice := make([]*JsonNullString, 0)
+	for _, str := range strSlice {
+		slice = append(slice, NewJsonNullString(str))
+	}
+	return slice
+}
+
 func (j *JsonNullString) MarshalJSON() ([]byte, error) {
 	if j.Valid {
 		return json.Marshal(j.String)

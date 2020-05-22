@@ -1,0 +1,20 @@
+#main app
+bind_addr = 8080
+liveness_addr = 8086
+log_level = "debug"
+max_goroutines_count = 20
+jwt_key = "super-secret-jwt-key"
+jwt_token_live = 30
+
+#pg
+[postgresdbconfig]
+need_connect = false
+host = "mydbhost"
+port = 5444
+db_name = "mydbname"
+db_ssl_mode = "disable"
+db_username = "mydbuser"
+db_password = "mydbpassword"
+max_idle_conns = 3
+max_open_conns = 15
+conn_max_life_time = 30000000000 #nanosec
